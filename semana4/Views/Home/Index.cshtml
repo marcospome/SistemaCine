@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinemaParadiso - Tu Cine Favorito</title>
+    <style>
+        /* Reset de Estilos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Estilos Globales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Estilos del Header */
+        .hero {
+            width: 1200px;
+            height: 150px;
+            background-image: url('Images/header.png');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+
+            .hero h1 {
+                font-size: 3em;
+                margin-bottom: 20px;
+            }
+
+            .hero p {
+                font-size: 1.5em;
+                margin-bottom: 40px;
+            }
+
+       
+        .promotion-bar {
+        background-color: #333; /* Color de fondo oscuro */
+        color: white; /* Color de texto blanco */
+        padding: 2px; /* Espacio interno */
+        overflow: hidden; /* Oculta el contenido que se desborde */
+
+            .image-container {
+            display: flex; /* Utiliza el modelo de caja flexible para organizar las imágenes en una fila */
+            justify-content: space-between; /* Distribuye uniformemente el espacio horizontal entre las imágenes */
+            align-items: center; /* Centra verticalmente las imágenes dentro del contenedor */
+            margin-top: 20px; /* Espacio superior */
+            max-width: 1600px; /* Ancho máximo del contenedor */
+        }
+
+
+        .image-container img {
+            width: calc(33.33% - 10px); /* Tamaño de las imágenes (33.33% del ancho del contenedor con un margen entre ellas) */
+            height: auto; /* Altura automática para mantener la proporción */
+            margin-right: 5px; /* Margen entre las imágenes */
+        }
+
+            .image-container img:last-child {
+                margin-right: 0; /* Elimina el margen derecho de la última imagen */
+            }
+
+}
+
+        .marquee {
+        width: 100%; /* Ocupa todo el ancho */
+        white-space: nowrap; /* Evita el salto de línea */
+        animation: marquee 10s linear infinite; /* Animación de desplazamiento */
+
+
+        /* Estilos del Footer */
+        .footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+    </style>
+
+</head>
+<body>
+    <header class="hero">
+    </header>
+    <div class="promotion-bar">
+        <marquee behavior="scroll" direction="left">Promociones exclusivas con Banco Patagonia   |   Miércoles 50% off para jubilados   |   Sorteos para Avant Premiere</marquee>
+    </div>
+    <div class="image-container">
+        <img src="Images/feat1.png" alt="Imagen 1">
+        <img src="Images/feat2.png" alt="Imagen 2">
+        <img src="Images/feat3.png" alt="Imagen 3">
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Omega Consultora - Todos los derechos reservados</p>
+        </div>
+    </footer>
+</body>
+</html>
