@@ -9,6 +9,9 @@ namespace semana4.Datos
         {
         }
 
-        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Pelicula> Pelicula { get; set; }
+        public DbSet<Genero> Genero { get; set; }
+
+        public DbSet<Clasificacion> Clasificacion { get; set; }
     }
 }

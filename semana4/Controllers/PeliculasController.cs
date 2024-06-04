@@ -3,28 +3,29 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MvcMovie.Models;
 using semana4.Datos;
 
 namespace semana4.Controllers
 {
-    public class MoviesController : Controller
+    public class PeliculasController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public MoviesController(ApplicationDbContext context)
+        public PeliculasController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Movies
+        // GET: Peliculas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Movies.ToListAsync());
+            return View(await _context.Pelicula.ToListAsync());
         }
 
-        // GET: Movies/Details/5
+        // GET: Peliculas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -32,37 +33,39 @@ namespace semana4.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies
+            var pelicula = await _context.Pelicula
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
+            if (pelicula == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            return View(pelicula);
         }
 
-        // GET: Movies/Create
+        // GET: Peliculas/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Movies/Create
+        // POST: Peliculas/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Titulo,Genero,Precio,Fecha_Estreno")] Movie movie)
+        public async Task<IActionResult> Create([Bind("Id,Titulo,FechaEstreno,Director,Sinopsis,Duracion,Afiche")] Pelicula pelicula)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(movie);
+                _context.Add(pelicula);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(movie);
+            return View(pelicula);
         }
 
-        // GET: Movies/Edit/5
+        // GET: Peliculas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -70,20 +73,22 @@ namespace semana4.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies.FindAsync(id);
-            if (movie == null)
+            var pelicula = await _context.Pelicula.FindAsync(id);
+            if (pelicula == null)
             {
                 return NotFound();
             }
-            return View(movie);
+            return View(pelicula);
         }
 
-        // POST: Movies/Edit/5
+        // POST: Peliculas/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Genero,Precio,Fecha_Estreno")] Movie movie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,FechaEstreno,Director,Sinopsis,Duracion,Afiche")] Pelicula pelicula)
         {
-            if (id != movie.Id)
+            if (id != pelicula.Id)
             {
                 return NotFound();
             }
@@ -92,12 +97,12 @@ namespace semana4.Controllers
             {
                 try
                 {
-                    _context.Update(movie);
+                    _context.Update(pelicula);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MovieExists(movie.Id))
+                    if (!PeliculaExists(pelicula.Id))
                     {
                         return NotFound();
                     }
@@ -108,10 +113,10 @@ namespace semana4.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(movie);
+            return View(pelicula);
         }
 
-        // GET: Movies/Delete/5
+        // GET: Peliculas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -119,30 +124,34 @@ namespace semana4.Controllers
                 return NotFound();
             }
 
-            var movie = await _context.Movies
+            var pelicula = await _context.Pelicula
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (movie == null)
+            if (pelicula == null)
             {
                 return NotFound();
             }
 
-            return View(movie);
+            return View(pelicula);
         }
 
-        // POST: Movies/Delete/5
+        // POST: Peliculas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var movie = await _context.Movies.FindAsync(id);
-            _context.Movies.Remove(movie);
+            var pelicula = await _context.Pelicula.FindAsync(id);
+            if (pelicula != null)
+            {
+                _context.Pelicula.Remove(pelicula);
+            }
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MovieExists(int id)
+        private bool PeliculaExists(int id)
         {
-            return _context.Movies.Any(e => e.Id == id);
+            return _context.Pelicula.Any(e => e.Id == id);
         }
     }
 }
