@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using MvcMovie.Models;
 using semana4.Datos;
 
 namespace semana4.Controllers
@@ -22,7 +22,7 @@ namespace semana4.Controllers
         // GET: Peliculas
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Pelicula.ToListAsync());
+            return View(await _context.Peliculas.ToListAsync());
         }
 
         // GET: Peliculas/Details/5
@@ -33,8 +33,8 @@ namespace semana4.Controllers
                 return NotFound();
             }
 
-            var pelicula = await _context.Pelicula
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var pelicula = await _context.Peliculas
+                .FirstOrDefaultAsync(m => m.PeliculaId == id);
             if (pelicula == null)
             {
                 return NotFound();
@@ -46,6 +46,8 @@ namespace semana4.Controllers
         // GET: Peliculas/Create
         public IActionResult Create()
         {
+            ViewBag.GeneroId = new SelectList(_context.Generos, "GeneroId", "Nombre");
+            ViewBag.ClasificacionId = new SelectList(_context.Clasificaciones, "ClasificacionId", "Nombre");
             return View();
         }
 
@@ -54,8 +56,9 @@ namespace semana4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,FechaEstreno,Director,Sinopsis,Duracion,Afiche")] Pelicula pelicula)
+        public async Task<IActionResult> Create([Bind("PeliculaId,Titulo,Director,FechaDeLanzamiento,Duracion,Sinopsis,Portada,GeneroId,ClasificacionId")] Pelicula pelicula)
         {
+            
             if (ModelState.IsValid)
             {
                 _context.Add(pelicula);
@@ -68,12 +71,14 @@ namespace semana4.Controllers
         // GET: Peliculas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.GeneroId = new SelectList(_context.Generos, "GeneroId", "Nombre");
+            ViewBag.ClasificacionId = new SelectList(_context.Clasificaciones, "ClasificacionId", "Nombre");
             if (id == null)
             {
                 return NotFound();
             }
 
-            var pelicula = await _context.Pelicula.FindAsync(id);
+            var pelicula = await _context.Peliculas.FindAsync(id);
             if (pelicula == null)
             {
                 return NotFound();
@@ -86,9 +91,9 @@ namespace semana4.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,FechaEstreno,Director,Sinopsis,Duracion,Afiche")] Pelicula pelicula)
+        public async Task<IActionResult> Edit(int id, [Bind("PeliculaId,Titulo,Director,FechaDeLanzamiento,Duracion,Sinopsis,Portada,GeneroId,ClasificacionId")] Pelicula pelicula)
         {
-            if (id != pelicula.Id)
+            if (id != pelicula.PeliculaId)
             {
                 return NotFound();
             }
@@ -102,7 +107,7 @@ namespace semana4.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PeliculaExists(pelicula.Id))
+                    if (!PeliculaExists(pelicula.PeliculaId))
                     {
                         return NotFound();
                     }
@@ -124,8 +129,8 @@ namespace semana4.Controllers
                 return NotFound();
             }
 
-            var pelicula = await _context.Pelicula
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var pelicula = await _context.Peliculas
+                .FirstOrDefaultAsync(m => m.PeliculaId == id);
             if (pelicula == null)
             {
                 return NotFound();
@@ -139,10 +144,10 @@ namespace semana4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var pelicula = await _context.Pelicula.FindAsync(id);
+            var pelicula = await _context.Peliculas.FindAsync(id);
             if (pelicula != null)
             {
-                _context.Pelicula.Remove(pelicula);
+                _context.Peliculas.Remove(pelicula);
             }
 
             await _context.SaveChangesAsync();
@@ -151,7 +156,7 @@ namespace semana4.Controllers
 
         private bool PeliculaExists(int id)
         {
-            return _context.Pelicula.Any(e => e.Id == id);
+            return _context.Peliculas.Any(e => e.PeliculaId == id);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model MvcMovie.Models.Pelicula
+﻿@model Pelicula
 
 @{
     ViewData["Title"] = "Details";
@@ -17,22 +17,16 @@
             @Html.DisplayFor(model => model.Titulo)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FechaEstreno)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FechaEstreno)
-        </dd>
-        <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Director)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Director)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sinopsis)
+            @Html.DisplayNameFor(model => model.FechaDeLanzamiento)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sinopsis)
+            @Html.DisplayFor(model => model.FechaDeLanzamiento)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Duracion)
@@ -41,14 +35,14 @@
             @Html.DisplayFor(model => model.Duracion)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Afiche)
+            @Html.DisplayNameFor(model => model.Sinopsis)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Afiche)
+            @Html.DisplayFor(model => model.Sinopsis)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model?.PeliculaId">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

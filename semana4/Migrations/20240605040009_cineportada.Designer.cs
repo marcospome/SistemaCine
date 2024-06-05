@@ -12,8 +12,8 @@ using semana4.Datos;
 namespace semana4.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240604205402_cinefix1")]
-    partial class cinefix1
+    [Migration("20240605040009_cineportada")]
+    partial class cineportada
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,51 +25,47 @@ namespace semana4.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("MvcMovie.Models.Clasificacion", b =>
+            modelBuilder.Entity("Clasificacion", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ClasificacionId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClasificacionId"));
 
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ClasificacionId");
 
-                    b.ToTable("Clasificacion");
+                    b.ToTable("Clasificaciones");
                 });
 
-            modelBuilder.Entity("MvcMovie.Models.Genero", b =>
+            modelBuilder.Entity("Genero", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("GeneroId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GeneroId"));
 
                     b.Property<string>("Nombre")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("GeneroId");
 
-                    b.ToTable("Genero");
+                    b.ToTable("Generos");
                 });
 
-            modelBuilder.Entity("MvcMovie.Models.Pelicula", b =>
+            modelBuilder.Entity("Pelicula", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("PeliculaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Afiche")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PeliculaId"));
 
                     b.Property<int>("ClasificacionId")
                         .HasColumnType("int");
@@ -81,46 +77,58 @@ namespace semana4.Migrations
                     b.Property<int>("Duracion")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("FechaEstreno")
+                    b.Property<DateTime>("FechaDeLanzamiento")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("GeneroId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Sinopsis")
+                    b.Property<string>("Portada")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sinopsis")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id");
+                    b.HasKey("PeliculaId");
 
                     b.HasIndex("ClasificacionId");
 
                     b.HasIndex("GeneroId");
 
-                    b.ToTable("Pelicula");
+                    b.ToTable("Peliculas");
                 });
 
-            modelBuilder.Entity("MvcMovie.Models.Pelicula", b =>
+            modelBuilder.Entity("Pelicula", b =>
                 {
-                    b.HasOne("MvcMovie.Models.Clasificacion", "Clasificacion")
-                        .WithMany()
+                    b.HasOne("Clasificacion", null)
+                        .WithMany("Peliculas")
                         .HasForeignKey("ClasificacionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MvcMovie.Models.Genero", "Genero")
-                        .WithMany()
+                    b.HasOne("Genero", null)
+                        .WithMany("Peliculas")
                         .HasForeignKey("GeneroId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
 
-                    b.Navigation("Clasificacion");
+            modelBuilder.Entity("Clasificacion", b =>
+                {
+                    b.Navigation("Peliculas");
+                });
 
-                    b.Navigation("Genero");
+            modelBuilder.Entity("Genero", b =>
+                {
+                    b.Navigation("Peliculas");
                 });
 #pragma warning restore 612, 618
         }

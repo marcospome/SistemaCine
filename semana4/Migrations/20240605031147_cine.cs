@@ -6,77 +6,76 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace semana4.Migrations
 {
     /// <inheritdoc />
-    public partial class cinefix1 : Migration
+    public partial class cine : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Clasificacion",
+                name: "Clasificaciones",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ClasificacionId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Clasificacion", x => x.Id);
+                    table.PrimaryKey("PK_Clasificaciones", x => x.ClasificacionId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Genero",
+                name: "Generos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    GeneroId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Genero", x => x.Id);
+                    table.PrimaryKey("PK_Generos", x => x.GeneroId);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Pelicula",
+                name: "Peliculas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    PeliculaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GeneroId = table.Column<int>(type: "int", nullable: false),
-                    FechaEstreno = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Titulo = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Director = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sinopsis = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FechaDeLanzamiento = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Duracion = table.Column<int>(type: "int", nullable: false),
-                    Afiche = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sinopsis = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    GeneroId = table.Column<int>(type: "int", nullable: false),
                     ClasificacionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pelicula", x => x.Id);
+                    table.PrimaryKey("PK_Peliculas", x => x.PeliculaId);
                     table.ForeignKey(
-                        name: "FK_Pelicula_Clasificacion_ClasificacionId",
+                        name: "FK_Peliculas_Clasificaciones_ClasificacionId",
                         column: x => x.ClasificacionId,
-                        principalTable: "Clasificacion",
-                        principalColumn: "Id",
+                        principalTable: "Clasificaciones",
+                        principalColumn: "ClasificacionId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Pelicula_Genero_GeneroId",
+                        name: "FK_Peliculas_Generos_GeneroId",
                         column: x => x.GeneroId,
-                        principalTable: "Genero",
-                        principalColumn: "Id",
+                        principalTable: "Generos",
+                        principalColumn: "GeneroId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pelicula_ClasificacionId",
-                table: "Pelicula",
+                name: "IX_Peliculas_ClasificacionId",
+                table: "Peliculas",
                 column: "ClasificacionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pelicula_GeneroId",
-                table: "Pelicula",
+                name: "IX_Peliculas_GeneroId",
+                table: "Peliculas",
                 column: "GeneroId");
         }
 
@@ -84,13 +83,13 @@ namespace semana4.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Pelicula");
+                name: "Peliculas");
 
             migrationBuilder.DropTable(
-                name: "Clasificacion");
+                name: "Clasificaciones");
 
             migrationBuilder.DropTable(
-                name: "Genero");
+                name: "Generos");
         }
     }
 }

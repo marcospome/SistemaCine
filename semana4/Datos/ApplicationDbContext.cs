@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MvcMovie.Models;
 
 namespace semana4.Datos
 {
@@ -9,9 +8,8 @@ namespace semana4.Datos
         {
         }
 
-        public DbSet<Pelicula> Pelicula { get; set; }
-        public DbSet<Genero> Genero { get; set; }
-
-        public DbSet<Clasificacion> Clasificacion { get; set; }
+        public DbSet<Pelicula> Peliculas { get; set; }
+        public DbSet<Genero> Generos { get; set; }
+        public DbSet<Clasificacion> Clasificaciones { get; set; }
     }
 }
