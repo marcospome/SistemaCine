@@ -2,13 +2,18 @@
 
 @{
     ViewData["Title"] = "Cartelera de Cine";
+    bool isAdmin = User.IsInRole("Admin");
 }
 
 <h1 class="text-center my-4">@ViewData["Title"]</h1>
 
-<p class="text-center">
-    <a class="btn btn-primary btn-lg" asp-action="Create">Crear Nueva Película</a>
-</p>
+@if (isAdmin)
+{
+    <p class="text-center">
+        <a class="btn btn-primary btn-lg" asp-action="Create">Crear Nueva Película</a>
+    </p>
+}
+
 
 <div class="container">
     <div class="row">
@@ -29,8 +34,12 @@
                         <div class="d-flex justify-content-center align-items-center mt-3">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-sm btn-outline-light mx-1" data-toggle="modal" data-target="#detailsModal_@pelicula.PeliculaId" onclick="loadDetails(@pelicula.PeliculaId)">Detalles</button>
-                                <a class="btn btn-sm btn-outline-light mx-1" asp-action="Edit" asp-route-id="@pelicula.PeliculaId">Editar</a>
-                                <a class="btn btn-sm btn-outline-danger mx-1" asp-action="Delete" asp-route-id="@pelicula.PeliculaId">Eliminar</a>
+                                @if (isAdmin)
+                                {
+                                    <a class="btn btn-sm btn-outline-light mx-1" asp-action="Edit" asp-route-id="@pelicula.PeliculaId">Editar</a>
+                                    <a class="btn btn-sm btn-outline-danger mx-1" asp-action="Delete" asp-route-id="@pelicula.PeliculaId">Eliminar</a>
+                                }
+
                             </div>
                         </div>
                     </div>
