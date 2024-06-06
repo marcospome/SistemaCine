@@ -58,7 +58,7 @@ namespace semana4.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("PeliculaId,Titulo,Director,FechaDeLanzamiento,Duracion,Sinopsis,Portada,GeneroId,ClasificacionId")] Pelicula pelicula)
         {
-            
+
             if (ModelState.IsValid)
             {
                 _context.Add(pelicula);
