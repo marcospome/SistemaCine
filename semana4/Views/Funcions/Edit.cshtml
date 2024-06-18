@@ -1,0 +1,50 @@
+﻿@model semana4.Models.Funcion
+
+@{
+    ViewData["Title"] = "Editar Función";
+}
+
+<h1>Editar Función</h1>
+
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdFuncion" />
+
+            <div class="form-group">
+                <label asp-for="Dia" class="control-label"></label>
+                <input asp-for="Dia" class="form-control" type="date" />
+                <span asp-validation-for="Dia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Horario" class="control-label"></label>
+                <input asp-for="Horario" class="form-control" type="time" />
+                <span asp-validation-for="Horario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Lenguaje" class="control-label"></label>
+                <input asp-for="Lenguaje" class="form-control" />
+                <span asp-validation-for="Lenguaje" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdPelicula" class="control-label"></label>
+                <select asp-for="IdPelicula" class="form-control" asp-items="ViewBag.IdPelicula"></select>
+                <span asp-validation-for="IdPelicula" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver a la Lista de Funciones</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
